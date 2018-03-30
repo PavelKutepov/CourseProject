@@ -5,17 +5,17 @@ import pkutepv.entity.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Entity
+
 public class Medicine extends Model {
-    @Column(name = "name")
-    public String name;
-    @Column(name = "firm")
-    private String firm;
-    @Column(name = "type")
-    private String type;
-    @Column(name = "price")
+
+    public final String name;
+
+    private final String firm;
+
+    private final String type;
+
     private int price;
-    @Column(name = "recipe")
+
     private boolean recipe;
 
     public Medicine(Long id, String name, String firm, String type, int price, boolean recipe) {
@@ -25,18 +25,6 @@ public class Medicine extends Model {
         this.type = type;
         this.price = price;
         this.recipe = recipe;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFirm(String firm) {
-        this.firm = firm;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void setPrice(int price) {

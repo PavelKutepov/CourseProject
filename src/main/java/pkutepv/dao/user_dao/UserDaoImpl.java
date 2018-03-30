@@ -7,7 +7,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+
     }
 
     @Override

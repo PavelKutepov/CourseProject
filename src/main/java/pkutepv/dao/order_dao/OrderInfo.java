@@ -8,21 +8,16 @@ import pkutepv.dao.user_dao.UserInfo;
 
 import javax.persistence.*;
 import java.util.Date;
-@Entity
-@Table(name = "order_info")
+
 public class OrderInfo extends Model {
-    @ManyToOne
-    @JoinColumn(name = "user_info_id")
-    private UserInfo userInfo;
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-    @Column(name = "date")
-    @Temporal(value=TemporalType.DATE)
-    private Date date;
+
+    private final UserInfo userInfo;
+
+    private final Employee employee;
+
+    private final Address address;
+
+    private final Date date;
 
     public OrderInfo(Long id, UserInfo userInfo, Employee employee, Address address, Date date) {
         super(id);
@@ -32,21 +27,7 @@ public class OrderInfo extends Model {
         this.date = date;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public UserInfo getUserInfo() {
         return userInfo;

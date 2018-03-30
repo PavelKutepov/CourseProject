@@ -8,14 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "employee")
+
 public class Employee extends Model {
-    @ManyToOne
-    @JoinColumn(name = "user_info_id")
+
     private UserInfo userInfo;
-    @ManyToOne
-    @JoinColumn(name = "departament_id")
+
     private Departament departament;
 
     public Employee(Long id, UserInfo userInfo, Departament departament) {

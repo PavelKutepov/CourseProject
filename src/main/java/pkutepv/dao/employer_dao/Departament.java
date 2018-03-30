@@ -6,12 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "departament")
+
 public class Departament extends Model {
-    @Column(name = "name")
+
     private String name;
-    @Column(name = "type")
+
     private String type;
 
     public Departament(Long id, String name, String type) {

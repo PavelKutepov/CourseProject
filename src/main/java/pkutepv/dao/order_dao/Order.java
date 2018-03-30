@@ -4,17 +4,14 @@ import pkutepv.dao.medicine_dao.Medicine;
 import pkutepv.entity.Model;
 
 import javax.persistence.*;
-@Entity
-@Table(name = "order")
+
 public class Order extends Model {
-    @ManyToOne
-    @JoinColumn(name = "medicine_id")
-    private Medicine medicine;
-    @ManyToOne
-    @JoinColumn(name = "order_info_id")
-    private OrderInfo orderInfo;
-    @Column(name = "count")
-    private int count;
+
+    private final Medicine medicine;
+
+    private final OrderInfo orderInfo;
+
+    private final int count;
 
     public Order(Long id, Medicine medicine, OrderInfo orderInfo, int count) {
         super(id);
@@ -23,17 +20,6 @@ public class Order extends Model {
         this.count = count;
     }
 
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
-    }
-
-    public void setOrderInfo(OrderInfo orderInfo) {
-        this.orderInfo = orderInfo;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     public Medicine getMedicine() {
         return medicine;

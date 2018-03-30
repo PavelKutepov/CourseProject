@@ -4,20 +4,19 @@ import pkutepv.entity.Model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "address")
 public class Address extends Model {
-    @OneToMany
-    @JoinColumn(name = "locality_id")
+
     private Locality locality;
-    @Column(name = "street")
+
     private String street;
-    @Column(name = "house")
-    private int  house;
-    @Column(name = "apartment")
+
+    private int house;
+
     private int apartment;
+
     public Address() {
     }
+
     public Address(Long id) {
         super(id);
     }

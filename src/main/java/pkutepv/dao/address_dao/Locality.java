@@ -6,14 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "locality")
+
 public class Locality extends Model {
-    @Column(name = "city")
+
     private String city;
-    @Column(name = "district")
+
     private String district;
-    @Column(name = "locality")
+
     private String local;
 
     public Locality(Long id, String city, String district, String local) {

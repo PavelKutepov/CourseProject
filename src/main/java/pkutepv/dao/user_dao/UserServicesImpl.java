@@ -1,22 +1,31 @@
 package pkutepv.dao.user_dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import pkutepv.dao.user_dao.UserDao;
 
-import javax.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+
 
 @Service
-public class UserServicesImpl {
-    @Autowired
-    private UserDao userDao;
+public class UserServicesImpl implements  UserServices{
 
-    @Transactional
-    void addUser(String login, String password, String lastname,String firstname, String patronymic, String phoneNumber){
-        userDao.addUser(login, password, lastname,firstname, patronymic,phoneNumber);
+
+    private UserServicesImpl userDao;
+
+    public void setUserDao(UserServicesImpl userDao) {
+        this.userDao = userDao;
     }
-    @Transactional
-    void removeUser(String login, String password){
-        userDao.removeUser(login,password);
+
+    @Override
+    public void addUser(String login, String password, UserInfo userInfo) {
+
+    }
+
+    @Override
+    public void removeUser(String login, String password) {
+
+    }
+
+    public UserServicesImpl getUserDao() {
+        return userDao;
     }
 }

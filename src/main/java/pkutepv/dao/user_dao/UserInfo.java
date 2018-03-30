@@ -1,49 +1,31 @@
 package pkutepv.dao.user_dao;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import pkutepv.entity.Model;
 
 import javax.persistence.*;
-@Entity
-@Table(name = "user_info")
-public class UserInfo extends Model {
-    @Column
-    private String lastName;
-    @Column
-    private String firstName;
-    @Column
-    private String patronymic;
-    @Column
-    private String PhoneNumber;
+@DatabaseTable(tableName = "user_info")
+public class UserInfo {
+    @DatabaseField(columnName = "user_info_id",foreign = true, canBeNull = false, foreignAutoRefresh = true)
+    private final int userInfoId;
+    @DatabaseField( canBeNull = false)
+    private final String lastName;
 
-    public UserInfo(String lastName, String firstName, String patronymic, String phoneNumber) {
-        super();
+    @DatabaseField( canBeNull = false)
+    private final String firstName;
+
+    @DatabaseField(canBeNull = false)
+    private final String patronymic;
+
+    @DatabaseField(unique = true, canBeNull = false)
+    private final String PhoneNumber;
+
+    public UserInfo(int userInfoId, String lastName, String firstName, String patronymic, String phoneNumber) {
+        this.userInfoId = userInfoId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.patronymic = patronymic;
-        PhoneNumber = phoneNumber;
-    }
-
-    public UserInfo(Long id, String lastName, String firstName, String patronymic, String phoneNumber) {
-        super(id);
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.patronymic = patronymic;
-        PhoneNumber = phoneNumber;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
     }
 

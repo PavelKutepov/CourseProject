@@ -1,20 +1,20 @@
 package pkutepv.dao.user_dao;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import pkutepv.entity.Model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name="users")
+@DatabaseTable(tableName = "user")
 public class User extends Model {
-    @Column(unique = true)
-    private String login;
-    @Column
+    @DatabaseField(id = true, canBeNull = false)
+    private final String login;
 
-    private String password;
-    @OneToOne
-    @JoinColumn(name = "userInfo_id")
-    private UserInfo userInfo;
+    @DatabaseField(id = true ,canBeNull = false)
+    private final String password;
+    @DatabaseField(columnName = "user_info_id",id = true)
+    private final UserInfo userInfo;
 
     public User(String login, String password, UserInfo userInfo) {
         this.login = login;
@@ -29,17 +29,6 @@ public class User extends Model {
         this.userInfo = userInfo;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
 
     public String getLogin() {
         return login;
