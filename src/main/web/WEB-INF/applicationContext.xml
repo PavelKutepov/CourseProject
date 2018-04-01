@@ -3,17 +3,21 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <mvc:annotation-driven />
 
+    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
     <context:annotation-config />
-
-
+<import resource="dataource_db.xml"/>
+    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--</bean>-->
     <context:component-scan base-package="pkutepv">
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
@@ -21,20 +25,39 @@
         <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
     </context:component-scan>
 
-    <import resource="data.xml"/>
-    <bean id="databaseUrl" class="java.lang.String">
-        <constructor-arg index="0" value="jdbc:mysql://localhost:3306/DB"/>
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/DB" />-->
+        <!--<property name="driverClassName" value ="com.mysql.jdbc.Driver"/>-->
+        <!--<property name="username" value="PavelKutepov" />-->
+        <!--<property name="password" value="CN3rfgdjd45Egfdr$fgD" />-->
+    <!--</bean>-->
 
+    <!--&lt;!&ndash; initialize Embedded DataSource. Встроенная база данных&ndash;&gt;-->
+    <!--<jdbc:initialize-database data-source="dataSource">-->
+        <!--<jdbc:script location="classpath:mydbscheme.sql"/>-->
+
+    <!--</jdbc:initialize-database>-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+        <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="connectionSource" class="com.j256.ormlite.jdbc.JdbcConnectionSource"
-          init-method="initialize">
-        <property name="url" ref="databaseUrl"/>
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
     </bean>
-
-    <bean id="userDao" class="pkutepv.dao.user_dao.UserServicesImpl">
+    <bean id="userDao" class="pkutepv.dao.user_dao.UserDaoImpl">
         <property name="userDao" ref="userDao" />
     </bean>
+    <bean id="userServices" class="pkutepv.dao.user_dao.UserServicesImpl">
+        <property name="userServices" ref="userServices" />
+    </bean>
+    <bean id="userInfoDao" class="pkutepv.dao.user_dao.UserInfoDaoImpl">
+        <property name="userInfoDao" ref="userDao" />
+
+    </bean>
+    <bean id="userInfoServices" class="pkutepv.dao.user_dao.UserInfoServiceImpl">
+        <property name="userInfoServices" ref="userInfoServices" />
+    </bean>
+
 <!--
  <bean id="AddressDao" class="pkutepv.dao.AddressDaoImpl">
         <property name="sessionFactory" ref="hibernateSessionFactory" />

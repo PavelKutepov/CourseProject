@@ -9,6 +9,6 @@ public interface UserDao {
 
     List<User> getAllUsers();
 
-    User getUserById();
+    User getUserById(int userId);
 
 }

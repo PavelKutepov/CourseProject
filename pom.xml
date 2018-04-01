@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
 
@@ -46,10 +47,19 @@
     </dependency>
     <dependency>
         <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
         <artifactId>spring-orm</artifactId>
         <version>${spring.version}</version>
     </dependency>
-
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.6</version>
+    </dependency>
     <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-server</artifactId>
@@ -78,11 +88,34 @@
         <artifactId>sqlite-jdbc</artifactId>
         <version>${sqlite.version}</version>
     </dependency>
-
+    <!--<dependency>-->
+        <!--<groupId>com.oracle.jdbc</groupId>-->
+        <!--<artifactId>ucp</artifactId>-->
+        <!--<version>12.2.0.1</version>-->
+    <!--</dependency>-->
     <dependency>
         <groupId>com.j256.ormlite</groupId>
         <artifactId>ormlite-jdbc</artifactId>
         <version>${ormlite.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit-dep</artifactId>
+        <version>4.11</version>
+        <type>pom</type>
+        <scope>test</scope>
     </dependency>
 </dependencies>
 <build>

@@ -918,5 +918,102 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
+    <table id="232" parent="7" name="user">
+      <Engine>InnoDB</Engine>
+    </table>
+    <table id="233" parent="7" name="user_info">
+      <Engine>InnoDB</Engine>
+    </table>
+    <column id="234" parent="232" name="user_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="235" parent="232" name="login">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="236" parent="232" name="password">
+      <Position>3</Position>
+      <DataType>varchar(100)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="237" parent="232" name="user_info_id">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="238" parent="232" name="user_user_id_uindex">
+      <ColNames>user_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="239" parent="232" name="user_login_uindex">
+      <ColNames>login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="240" parent="232" name="user_user_info_id_uindex">
+      <ColNames>user_info_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="241" parent="232" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="242" parent="232" name="user_user_id_uindex">
+      <ColNames>user_id</ColNames>
+      <UnderlyingIndexName>user_user_id_uindex</UnderlyingIndexName>
+    </key>
+    <key id="243" parent="232" name="user_login_uindex">
+      <ColNames>login</ColNames>
+      <UnderlyingIndexName>user_login_uindex</UnderlyingIndexName>
+    </key>
+    <key id="244" parent="232" name="user_user_info_id_uindex">
+      <ColNames>user_info_id</ColNames>
+      <UnderlyingIndexName>user_user_info_id_uindex</UnderlyingIndexName>
+    </key>
+    <foreign-key id="245" parent="232" name="user_info_id">
+      <ColNames>user_info_id</ColNames>
+      <RefSchemaName>pharmacydatabase</RefSchemaName>
+      <RefTableName>user_info</RefTableName>
+      <RefColNames>user_info_id</RefColNames>
+    </foreign-key>
+    <column id="246" parent="233" name="user_info_id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="247" parent="233" name="lastname">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="233" name="firstname">
+      <Position>3</Position>
+      <DataType>varchar(30)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="249" parent="233" name="patronymic">
+      <Position>4</Position>
+      <DataType>varchar(30)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="250" parent="233" name="phone_number">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="251" parent="233" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_info_id</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>
