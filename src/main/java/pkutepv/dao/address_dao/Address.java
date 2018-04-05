@@ -1,12 +1,7 @@
 package pkutepv.dao.address_dao;
 
-import pkutepv.entity.Model;
-
-import javax.persistence.*;
-
-public class Address extends Model {
-
-    private Locality locality;
+public class Address {
+    private int addressId;
 
     private String street;
 
@@ -14,19 +9,21 @@ public class Address extends Model {
 
     private int apartment;
 
-    public Address() {
-    }
+    private Locality locality;
 
-    public Address(Long id) {
-        super(id);
-    }
-
-    public Address(Long id, Locality locality, String street, int house, int apartment) {
-        super(id);
-        this.locality = locality;
+    public Address(int addressId, String street, int house, int apartment, Locality locality) {
+        this.addressId = addressId;
         this.street = street;
         this.house = house;
         this.apartment = apartment;
+        this.locality = locality;
+    }
+
+    public Address(String street, int house, int apartment, Locality locality) {
+        this.street = street;
+        this.house = house;
+        this.apartment = apartment;
+        this.locality = locality;
     }
 
     public void setLocality(Locality locality) {
@@ -61,5 +58,11 @@ public class Address extends Model {
         return apartment;
     }
 
+    public int getAddressId() {
+        return addressId;
+    }
 
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
 }

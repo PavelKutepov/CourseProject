@@ -1,13 +1,10 @@
 package pkutepv.dao.address_dao;
 
-import pkutepv.entity.Model;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.Objects;
 
 
-public class Locality extends Model {
+public class Locality  {
+    private int localityId;
 
     private String city;
 
@@ -15,23 +12,21 @@ public class Locality extends Model {
 
     private String local;
 
-    public Locality(Long id, String city, String district, String local) {
-        super(id);
+    public Locality(int locality_id, String city, String district, String local) {
+        this.localityId = locality_id;
         this.city = city;
         this.district = district;
         this.local = local;
     }
 
-    public void setCity(String city) {
+    public Locality(String city, String district, String local) {
         this.city = city;
-    }
-
-    public void setDistrict(String district) {
         this.district = district;
+        this.local = local;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public int getLocality_id() {
+        return localityId;
     }
 
     public String getCity() {
@@ -44,5 +39,25 @@ public class Locality extends Model {
 
     public String getLocal() {
         return local;
+    }
+
+    public void setLocalityId(int localityId) {
+        this.localityId = localityId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Locality)) return false;
+        Locality locality = (Locality) o;
+        return Objects.equals(city, locality.city) &&
+                Objects.equals(district, locality.district) &&
+                Objects.equals(local, locality.local);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(city, district, local);
     }
 }

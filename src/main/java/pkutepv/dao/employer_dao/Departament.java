@@ -1,37 +1,45 @@
 package pkutepv.dao.employer_dao;
 
-import pkutepv.entity.Model;
+public class Departament {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-
-public class Departament extends Model {
+    private int departamentId;
 
     private String name;
 
-    private String type;
+    private String position;
 
-    public Departament(Long id, String name, String type) {
-        super(id);
+    public Departament(int departamentId, String name, String position) {
+        this.departamentId = departamentId;
         this.name = name;
-        this.type = type;
+        this.position = position;
     }
 
-    public void setName(String name) {
+    public Departament(String name, String position) {
         this.name = name;
+        this.position = position;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public int getDepartamentId() {
+        return departamentId;
+    }
+
+    public void setDepartamentId(int departamentId) {
+        this.departamentId = departamentId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

@@ -1,36 +1,47 @@
 package pkutepv.dao.employer_dao;
 
-import pkutepv.entity.Model;
-import pkutepv.dao.user_dao.UserInfo;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import pkutepv.dao.user_dao.User;
 
 
-public class Employee extends Model {
+public class Employee {
 
-    private UserInfo userInfo;
+    private int employeeId;
+
+    private User user;
 
     private Departament departament;
 
-    public Employee(Long id, UserInfo userInfo, Departament departament) {
-        super(id);
-        this.userInfo = userInfo;
+
+    public Employee(int employeeId, User user, Departament departament) {
+        this.employeeId = employeeId;
+        this.user = user;
         this.departament = departament;
     }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
+    public Employee(User user, Departament departament) {
+        this.user = user;
+        this.departament = departament;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Departament getDepartament() {
         return departament;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
     }
 
     public void setDepartament(Departament departament) {
