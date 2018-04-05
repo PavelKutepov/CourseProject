@@ -3,45 +3,68 @@ package pkutepv.dao.order_dao;
 
 import pkutepv.dao.address_dao.Address;
 import pkutepv.dao.employer_dao.Employee;
-import pkutepv.entity.Model;
 import pkutepv.dao.user_dao.UserInfo;
 
-import javax.persistence.*;
 import java.util.Date;
 
-public class OrderInfo extends Model {
+public class OrderInfo {
 
-    private final UserInfo userInfo;
+    private int orderInfoId;
 
-    private final Employee employee;
+    private UserInfo userInfo;
 
-    private final Address address;
+    private Employee employee;
 
-    private final Date date;
+    private Address address;
 
-    public OrderInfo(Long id, UserInfo userInfo, Employee employee, Address address, Date date) {
-        super(id);
+    private Date date;
+
+
+    public OrderInfo(int orderInfoId, UserInfo userInfo, Employee employee, Address address, Date date) {
+        this.orderInfoId = orderInfoId;
         this.userInfo = userInfo;
         this.employee = employee;
         this.address = address;
         this.date = date;
     }
 
+    public int getOrderInfoId() {
+        return orderInfoId;
+    }
 
+    public void setOrderInfoId(int orderInfoId) {
+        this.orderInfoId = orderInfoId;
+    }
 
     public UserInfo getUserInfo() {
         return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public Employee getEmployee() {
         return employee;
     }
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public Address getAddress() {
         return address;
     }
 
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Date getDate() {
         return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

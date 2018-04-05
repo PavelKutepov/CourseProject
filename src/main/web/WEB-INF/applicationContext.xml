@@ -2,78 +2,89 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
-    <context:annotation-config />
-<import resource="dataource_db.xml"/>
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-    <!--</bean>-->
+
+    <context:annotation-config/>
+    <import resource="dataource_db.xml"/>
+
     <context:component-scan base-package="pkutepv">
         <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
     <context:component-scan base-package="pkutepv" use-default-filters="false">
-        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation" />
+        <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
     </context:component-scan>
 
-    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="url" value="jdbc:mysql://localhost:3306/DB" />-->
-        <!--<property name="driverClassName" value ="com.mysql.jdbc.Driver"/>-->
-        <!--<property name="username" value="PavelKutepov" />-->
-        <!--<property name="password" value="CN3rfgdjd45Egfdr$fgD" />-->
-    <!--</bean>-->
 
-    <!--&lt;!&ndash; initialize Embedded DataSource. Встроенная база данных&ndash;&gt;-->
-    <!--<jdbc:initialize-database data-source="dataSource">-->
-        <!--<jdbc:script location="classpath:mydbscheme.sql"/>-->
-
-    <!--</jdbc:initialize-database>-->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
         <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-        <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
-    </bean>
     <bean id="userDao" class="pkutepv.dao.user_dao.UserDaoImpl">
-        <property name="userDao" ref="userDao" />
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="userDao" ref="userDao"/>
+        <property name="userInfoDao" ref="userInfoDao"/>
+        <property name="roleDao" ref="roleDao"/>
+
+    </bean>
+    <bean id="roleDao" class="pkutepv.dao.role.RoleDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     <bean id="userServices" class="pkutepv.dao.user_dao.UserServicesImpl">
-        <property name="userServices" ref="userServices" />
+        <property name="userDao" ref="userDao"/>
+        <property name="userInfoDao" ref="userInfoDao"/>
     </bean>
     <bean id="userInfoDao" class="pkutepv.dao.user_dao.UserInfoDaoImpl">
-        <property name="userInfoDao" ref="userDao" />
-
-    </bean>
-    <bean id="userInfoServices" class="pkutepv.dao.user_dao.UserInfoServiceImpl">
-        <property name="userInfoServices" ref="userInfoServices" />
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="userInfoDao" ref="userInfoDao"/>
     </bean>
 
-<!--
- <bean id="AddressDao" class="pkutepv.dao.AddressDaoImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory" />
+    <bean id="addressDao" class="pkutepv.dao.address_dao.AddressDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="addressDao" ref="addressDao"/>
     </bean>
-    <bean id="EmployeeDao" class="pkutepv.dao.EmployeeDaoImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory" />
+    <bean id="addressService" class="pkutepv.dao.address_dao.AddressServiceImpl">
+        <property name="addressDao" ref="addressDao"/>
+        <property name="localityDao" ref="localityDao"/>
     </bean>
-    <bean id="MedicineDao" class="pkutepv.dao.MedicineDaoImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory" />
+
+    <bean id="localityDao" class="pkutepv.dao.address_dao.LocalityDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
-    <bean id="OrderDao" class="pkutepv.dao.OrderDaoImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory" />
+
+    <bean id="employeeDao" class="pkutepv.dao.employer_dao.EmployeeDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="userServices" ref="userServices"/>
+        <property name="departamentDao" ref="departamentDao"/>
     </bean>
-    <bean id="UserDao" class="pkutepv.dao.UserDaoImpl">
-        <property name="sessionFactory" ref="hibernateSessionFactory" />
+    <bean id="employeeService" class="pkutepv.dao.employer_dao.EmployeeServiceImpl">
+        <property name="employeeDao" ref="employeeDao"/>
     </bean>
--->
+    <bean id="medicineDao" class="pkutepv.dao.medicine_dao.MedicineDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean id="medicineService" class="pkutepv.dao.medicine_dao.MedicineServicesImpl">
+        <property name="medicineDao" ref="medicineDao" />
+    </bean>
+    <bean id="orderDao" class="pkutepv.dao.order_dao.OrderDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean id="orderService" class="pkutepv.dao.order_dao.OrderServicesImpl">
+        <property name="orderDao" ref="orderDao"/>
+    </bean>
+    <bean id="departamentDao" class="pkutepv.dao.employer_dao.DepartamentDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <bean id="orderInfoDao" class="pkutepv.dao.order_dao.OrderInfoDaoImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <property name="userServices" ref="userServices"/>
+        <property name="employeeService" ref="employeeService"/>
+        <property name="addressService" ref="addressService"/>
+
+    </bean>
+
 
 </beans>

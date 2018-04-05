@@ -1,9 +1,6 @@
 package pkutepv.dao.user_dao;
 
 
-
-
-
 public class User {
     private final int userId;
     private final String login;
@@ -29,5 +26,9 @@ public class User {
 
     public UserInfo getUserInfo() {
         return userInfo;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

@@ -1,45 +1,66 @@
 package pkutepv.dao.user_dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
-@Transactional(readOnly = true)
-public class UserInfoDaoImpl implements UserInfoDao {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    private UserDaoImpl userInfoDao;
-    private UserDaoImpl userDao;
+
+@Transactional(isolation = Isolation.READ_COMMITTED)
+public class UserInfoDaoImpl extends NamedParameterJdbcDaoSupport implements UserInfoDao {
+
+    private UserInfoDao userInfoDao;
 
     @Override
-    public List<UserInfo> getAllUserInfo() { StringBuilder sql = new StringBuilder();
+    @Transactional(readOnly = true)
+    public List<UserInfo> getAllUserInfo() {
+        StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.user_info ");
-        return  jdbcTemplate.query(sql.toString(),new UserInfoRowMapper());
+        return getNamedParameterJdbcTemplate().query(sql.toString(), new UserInfoRowMapper());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserInfo getUserInfoById(int userId) {
-        return null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM pharmacydatabase.user_info WHERE user_id = ").append(userId);
+        return getJdbcTemplate().queryForObject(sql.toString(), new UserInfoRowMapper());
+
     }
 
-    public void setUserInfoDao(UserDaoImpl userInfoDao) {
+    public void setUserInfoDao(UserInfoDao userInfoDao) {
         this.userInfoDao = userInfoDao;
     }
 
-    public UserDaoImpl getUserInfoDao() {
+    public UserInfoDao getUserInfoDao() {
         return userInfoDao;
     }
 
-    public void setUserDao(UserDaoImpl userDao) {
-        this.userDao = userDao;
-    }
-
-    public UserDaoImpl getUserDao() {
-        return userDao;
+    @Override
+    public int addUserInfo( String lastname, String firstname, String patronymic, String phoneNumber) {
+        StringBuilder sql = new StringBuilder();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("lastname",lastname);
+        mapSqlParameterSource.addValue("firstname",firstname);
+        mapSqlParameterSource.addValue("patronymic",patronymic);
+        mapSqlParameterSource.addValue("phoneNumber",phoneNumber);
+        sql.append("INSERT INTO pharmacydatabase.user_info ")
+                .append("VALUES( ")
+                .append(" :lastname, ")
+                .append(" :firstname ,")
+                .append(" :patronymic ,")
+                .append(" :phoneNumber  )");
+        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     private class UserInfoRowMapper implements RowMapper<UserInfo> {
@@ -48,7 +69,7 @@ public class UserInfoDaoImpl implements UserInfoDao {
         @Override
         public UserInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-            return new UserInfo(rs.getInt("user_info_id"), rs.getString("lastname"),
+            return new UserInfo(rs.getInt("user_id"), rs.getString("lastname"),
                     rs.getString("firstname"), rs.getString("patronymic"), rs.getString("phone_number"));
 
         }

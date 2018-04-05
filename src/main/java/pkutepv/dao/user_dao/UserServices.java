@@ -6,12 +6,16 @@ import java.util.List;
 
 @Service
 public interface UserServices {
-   void addUser(String login, String password, String lastname, String firstname, String patronymic, String phoneNumber);
 
-   void removeUser(String login, String password);
+    void addUser(String login, String password, String lastname, String firstname, String patronymic, String phoneNumber);
 
-   List<User> getAllUsers();
+    void removeUser(String login, String password);
 
-   User getUserById(int userId);
+    List<User> getAllUsers();
 
+    User getUserById(int userId);
+
+    List<UserInfo> getAllUsersInfo();
+
+    UserInfo getUserInfoById(int userId);
 }
