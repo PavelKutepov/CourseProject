@@ -3,6 +3,7 @@ package pkutepv.dao.user_dao;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
 @Component
 public interface UserDao {
     User addUser(String login, String password, UserInfo userInfo);

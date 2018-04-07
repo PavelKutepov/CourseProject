@@ -39,10 +39,10 @@ public class OrderDaoImpl extends NamedParameterJdbcDaoSupport implements OrderD
 
     @Override
     public Order addOrder(Medicine medicine, OrderInfo orderInfo, int count) {
-        MapSqlParameterSource mapSqlParameterSource =  new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("medicine_id",medicine.getMedicine_id());
-        mapSqlParameterSource.addValue("order_info_id",orderInfo.getOrderInfoId());
-        mapSqlParameterSource.addValue("count",count);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("medicine_id", medicine.getMedicine_id());
+        mapSqlParameterSource.addValue("order_info_id", orderInfo.getOrderInfoId());
+        mapSqlParameterSource.addValue("count", count);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO pharmacydatabase.order (medicine_id,order_info_id,count) ")
@@ -50,9 +50,15 @@ public class OrderDaoImpl extends NamedParameterJdbcDaoSupport implements OrderD
                 .append(" :medicine_id , ")
                 .append(" :order_info_id , ")
                 .append(" :count)");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
-        Order order = new Order( keyHolder.getKey().intValue(),medicine,orderInfo,count);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
+        Order order = new Order(keyHolder.getKey().intValue(), medicine, orderInfo, count);
         return order;
+    }
+
+    public List<Order> getOrderListByOrderInfoId(int orderInfoId) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM pharmacydatabase.order WHERE order_info_id = ").append(orderInfoId);
+        return getJdbcTemplate().query(sql.toString(), new OrderRowMapper());
     }
 
     public void setMedicineService(MedicineService medicineService) {

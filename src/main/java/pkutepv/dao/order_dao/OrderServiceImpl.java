@@ -24,17 +24,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date) {
-        return orderInfoDao.addOrderInfo(userInfo,employee,address,date);
+        return orderInfoDao.addOrderInfo(userInfo, employee, address, date);
     }
 
     @Override
     public Order addOrder(Medicine medicine, OrderInfo orderInfo, int count) {
-        return orderDao.addOrder(medicine,orderInfo,count);
+        return orderDao.addOrder(medicine, orderInfo, count);
     }
 
     @Override
     public OrderInfo getOrderInfoById(int orderInfoId) {
         return orderInfoDao.getOrderInfoById(orderInfoId);
+    }
+
+    @Override
+    public List<Order> getOrderListByOrderInfoId(int orderInfoId) {
+        return orderDao.getOrderListByOrderInfoId(orderInfoId);
     }
 
     @Override

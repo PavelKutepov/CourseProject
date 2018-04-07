@@ -45,17 +45,17 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         StringBuilder sql = new StringBuilder();
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("user_id",userInfo.getUserInfoId());
+        mapSqlParameterSource.addValue("user_id", userInfo.getUserInfoId());
         mapSqlParameterSource.addValue("login", login);
-        mapSqlParameterSource.addValue("password",password);
+        mapSqlParameterSource.addValue("password", password);
 
         sql.append("INSERT INTO pharmacydatabase.user  (user_id,login,password)")
                 .append("VALUES( ")
                 .append(" :user_id , ")
                 .append(" :login, ")
                 .append(" :password )");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
-        User newUser = new User(userInfo.getUserInfoId(),login,password,userInfo);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource);
+        User newUser = new User(userInfo.getUserInfoId(), login, password, userInfo);
         roleDao.addRole(newUser);
         return newUser;
     }

@@ -18,13 +18,12 @@ import java.util.List;
 public class LocalityDaoImpl extends NamedParameterJdbcDaoSupport implements LocalityDao {
 
 
-
     @Override
     @Transactional(readOnly = true)
     public List<Locality> getAllLocality() {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.locality ");
-        return getNamedParameterJdbcTemplate().query(sql.toString(),new LocalityRowMapper());
+        return getNamedParameterJdbcTemplate().query(sql.toString(), new LocalityRowMapper());
     }
 
     @Override
@@ -32,18 +31,18 @@ public class LocalityDaoImpl extends NamedParameterJdbcDaoSupport implements Loc
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("city",locality.getCity());
-        mapSqlParameterSource.addValue("district",locality.getDistrict());
-        mapSqlParameterSource.addValue("local",locality.getLocal());
+        mapSqlParameterSource.addValue("city", locality.getCity());
+        mapSqlParameterSource.addValue("district", locality.getDistrict());
+        mapSqlParameterSource.addValue("local", locality.getLocal());
 
         sql.append("INSERT INTO pharmacydatabase.locality ( city, district, local ) ")
                 .append("VALUES( ")
                 .append(" :city, ")
                 .append(" :district,")
                 .append(" :local )");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
-        locality.setLocalityId( keyHolder.getKey().intValue());
-        return new Locality(keyHolder.getKey().intValue(),locality.getCity(),locality.getDistrict(),locality.getLocal());
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
+        locality.setLocalityId(keyHolder.getKey().intValue());
+        return new Locality(keyHolder.getKey().intValue(), locality.getCity(), locality.getDistrict(), locality.getLocal());
     }
 
     @Override

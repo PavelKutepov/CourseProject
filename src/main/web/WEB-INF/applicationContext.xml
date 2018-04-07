@@ -18,7 +18,9 @@
 
     <context:component-scan base-package="pkutepv"/>
 
-
+    <bean id="applicationController" class="pkutepv.controller.ApplicationController" lazy-init="true">
+        <property name="userService" ref="userService"/>
+    </bean>
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
         <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
     </bean>
@@ -69,7 +71,7 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
     <bean id="medicineService" class="pkutepv.dao.medicine_dao.MedicineServiceImpl">
-        <property name="medicineDao" ref="medicineDao" />
+        <property name="medicineDao" ref="medicineDao"/>
     </bean>
     <bean id="orderDao" class="pkutepv.dao.order_dao.OrderDaoImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>

@@ -24,10 +24,10 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
     @Override
     public void addAddress(String street, int house, int apartment, Locality locality) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("street",street);
-        mapSqlParameterSource.addValue("house",house);
-        mapSqlParameterSource.addValue("apartment",apartment);
-        mapSqlParameterSource.addValue("locality_id",locality.getLocality_id());
+        mapSqlParameterSource.addValue("street", street);
+        mapSqlParameterSource.addValue("house", house);
+        mapSqlParameterSource.addValue("apartment", apartment);
+        mapSqlParameterSource.addValue("locality_id", locality.getLocality_id());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO pharmacydatabase.address (street,house,apartment,locality_id)  ")
@@ -35,18 +35,18 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
                 .append(" :street, ")
                 .append(" :house, ")
                 .append(" :apartment, ")
-                .append("  :locality_id )" );
+                .append("  :locality_id )");
 
-     getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
     }
 
     @Override
     public Address getAddressForId(int addressId) {
         StringBuilder sql = new StringBuilder();
-        MapSqlParameterSource mapSqlParameterSource =new  MapSqlParameterSource();
-        mapSqlParameterSource.addValue("address_id",addressId);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("address_id", addressId);
         sql.append("SELECT * FROM pharmacydatabase.address WHERE address_id = :address_id");
-        return getNamedParameterJdbcTemplate().queryForObject(sql.toString(),mapSqlParameterSource,new AddressRowMapper());
+        return getNamedParameterJdbcTemplate().queryForObject(sql.toString(), mapSqlParameterSource, new AddressRowMapper());
     }
 
     @Override

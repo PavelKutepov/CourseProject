@@ -5,12 +5,12 @@ import java.util.List;
 public class AddressServiceImpl implements AddressService {
 
     private AddressDao addressDao;
-    private  LocalityDao localityDao;
+    private LocalityDao localityDao;
 
 
     @Override
-    public void addAdress( String street, int house, int apartment, Locality locality) {
-        addressDao.addAddress(street,house,apartment,locality);
+    public void addAdress(String street, int house, int apartment, Locality locality) {
+        addressDao.addAddress(street, house, apartment, locality);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address getAddressForId(int addressId) {
-       return addressDao.getAddressForId(addressId);
+        return addressDao.getAddressForId(addressId);
     }
 
     public void setAddressDao(AddressDao addressDao) {

@@ -3,7 +3,7 @@ package pkutepv.dao.address_dao;
 import java.util.Objects;
 
 
-public class Locality  {
+public class Locality {
     private int localityId;
 
     private String city;

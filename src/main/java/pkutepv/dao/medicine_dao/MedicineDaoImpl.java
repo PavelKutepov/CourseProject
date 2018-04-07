@@ -2,6 +2,7 @@ package pkutepv.dao.medicine_dao;
 
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +20,22 @@ public class MedicineDaoImpl extends NamedParameterJdbcDaoSupport implements Med
     @Transactional(readOnly = true)
     public void addMedicine(String name, String firm, String type, int price, boolean recipe) {
         StringBuilder sql = new StringBuilder();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("name",name);
+        mapSqlParameterSource.addValue("firm",firm);
+        mapSqlParameterSource.addValue("type",type);
+        mapSqlParameterSource.addValue("recipe",recipe);
+        mapSqlParameterSource.addValue("price",price);
+
         sql.append("INSERT INTO pharmacydatabase.medicine (name,firm,type,recipe,price) ")
                 .append("VALUES( ")
-                .append("\"" + name  + "\",")
-                .append("\"" + firm  + "\",")
-                .append("\"" + type  + "\",")
-                .append( recipe + ",")
-                .append( price + ", )");
+                .append(" :name, ")
+                .append(" :firm, ")
+                .append(" :type, ")
+                .append(" :recipe ,")
+                .append(" :price, )");
 
-        getJdbcTemplate().update(sql.toString());
+        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
     }
 
     @Override

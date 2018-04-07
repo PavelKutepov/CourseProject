@@ -13,9 +13,15 @@ import java.util.List;
 public interface OrderService {
     List<Order> getOrderList();
 
+    List<Order> getOrderListByOrderInfoId(int orderInfoId);
+
     Order getOrderById(int orderId);
+
     OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date);
+
     Order addOrder(Medicine medicine, OrderInfo orderInfo, int count);
+
     OrderInfo getOrderInfoById(int orderInfoId);
+
     List<OrderInfo> getAllOrderInfo();
 }

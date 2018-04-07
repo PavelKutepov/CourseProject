@@ -3,18 +3,18 @@ package pkutepv.dao.user_dao;
 import java.util.Objects;
 
 public class UserInfo {
-    private  int userInfoId;
+    private int userInfoId;
 
-    private  String lastName;
-
-
-    private  String firstName;
+    private String lastName;
 
 
-    private  String patronymic;
+    private String firstName;
 
 
-    private  String PhoneNumber;
+    private String patronymic;
+
+
+    private String PhoneNumber;
 
     public UserInfo(int userInfoId, String lastName, String firstName, String patronymic, String phoneNumber) {
         this.userInfoId = userInfoId;

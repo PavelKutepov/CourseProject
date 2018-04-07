@@ -4,7 +4,6 @@ package pkutepv.dao.user_dao;
 import java.util.List;
 
 
-
 public class UserServiceImpl implements UserService {
 
 
@@ -13,12 +12,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addUser(String login, String password, UserInfo userInfo) {
-        return userDao.addUser(login,password,userInfo);
+        return userDao.addUser(login, password, userInfo);
     }
 
     @Override
     public UserInfo addUserInfo(String lastName, String firstName, String patronymic, String phoneNumber) {
-        return userInfoDao.addUserInfo(lastName,firstName,patronymic,phoneNumber);
+        return userInfoDao.addUserInfo(lastName, firstName, patronymic, phoneNumber);
     }
 
     @Override

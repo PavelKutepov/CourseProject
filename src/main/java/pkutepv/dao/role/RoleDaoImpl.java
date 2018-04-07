@@ -33,10 +33,10 @@ public class RoleDaoImpl extends NamedParameterJdbcDaoSupport implements RoleDao
     public void addRole(User user) {
         StringBuilder sql = new StringBuilder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("login",user.getLogin());
+        mapSqlParameterSource.addValue("login", user.getLogin());
         sql.append("INSERT INTO pharmacydatabase.role (login) VALUES( ")
                 .append(" :login );");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource);
     }
 
 

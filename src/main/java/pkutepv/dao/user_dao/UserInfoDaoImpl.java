@@ -47,23 +47,23 @@ public class UserInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Use
     }
 
     @Override
-    public UserInfo addUserInfo( String lastname, String firstname, String patronymic, String phoneNumber) {
+    public UserInfo addUserInfo(String lastname, String firstname, String patronymic, String phoneNumber) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("lastname",lastname);
-        mapSqlParameterSource.addValue("firstname",firstname);
-        mapSqlParameterSource.addValue("patronymic",patronymic);
-        mapSqlParameterSource.addValue("phoneNumber",phoneNumber);
+        mapSqlParameterSource.addValue("lastname", lastname);
+        mapSqlParameterSource.addValue("firstname", firstname);
+        mapSqlParameterSource.addValue("patronymic", patronymic);
+        mapSqlParameterSource.addValue("phoneNumber", phoneNumber);
         sql.append("INSERT INTO pharmacydatabase.user_info ( lastname,firstname,patronymic,phone_number)")
                 .append("VALUES( ")
                 .append(" :lastname, ")
                 .append(" :firstname ,")
                 .append(" :patronymic ,")
                 .append(" :phoneNumber  )");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
 
-        return new UserInfo(keyHolder.getKey().intValue(),lastname,firstname,patronymic,phoneNumber);
+        return new UserInfo(keyHolder.getKey().intValue(), lastname, firstname, patronymic, phoneNumber);
     }
 
     private class UserInfoRowMapper implements RowMapper<UserInfo> {

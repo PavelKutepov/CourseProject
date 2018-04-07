@@ -13,7 +13,7 @@ import java.util.Map;
 @RequestMapping("/")
 public class ApplicationController {
 
-    @Inject
+
     private UserService userService;
 
 

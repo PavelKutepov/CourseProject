@@ -6,11 +6,11 @@ import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-   private EmployeeDao employeeDao;
+    private EmployeeDao employeeDao;
 
     @Override
     public void addEmployee(User user, Departament departament) {
-        employeeDao.addEmployee(user,departament);
+        employeeDao.addEmployee(user, departament);
     }
 
     @Override

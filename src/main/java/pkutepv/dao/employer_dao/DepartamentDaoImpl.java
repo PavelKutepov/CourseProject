@@ -22,7 +22,7 @@ public class DepartamentDaoImpl extends NamedParameterJdbcDaoSupport implements 
     public List<Departament> getAllDepartament() {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.departament  ");
-        return getNamedParameterJdbcTemplate().query(sql.toString(), new DepartamentRowMapper());
+        return getJdbcTemplate().query(sql.toString(), new DepartamentRowMapper());
     }
 
     @Override
@@ -35,17 +35,17 @@ public class DepartamentDaoImpl extends NamedParameterJdbcDaoSupport implements 
     }
 
     @Override
-    public void addDepartament( String name, String position) {
+    public void addDepartament(String name, String position) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        MapSqlParameterSource mapSqlParameterSource= new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("name",name);
-        mapSqlParameterSource.addValue("position",position);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("name", name);
+        mapSqlParameterSource.addValue("position", position);
         sql.append("INSERT INTO pharmacydatabase.departament (name, position)")
                 .append("VALUES( ")
                 .append(":name, ")
                 .append(":position )");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
     }
 
     private class DepartamentRowMapper implements RowMapper<Departament> {

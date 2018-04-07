@@ -15,8 +15,9 @@ import java.util.List;
 
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class EmployeeDaoImpl extends NamedParameterJdbcDaoSupport implements EmployeeDao {
-   private UserService userService;
-   private DepartamentDao departamentDao;
+
+    private UserService userService;
+    private DepartamentDao departamentDao;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -30,11 +31,14 @@ public class EmployeeDaoImpl extends NamedParameterJdbcDaoSupport implements Emp
     @Transactional(readOnly = true)
     public void addEmployee(User user, Departament departament) {
         StringBuilder sql = new StringBuilder();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("departament_id",departament.getDepartamentId());
+        mapSqlParameterSource.addValue("user_id",user.getUserId());
         sql.append("INSERT INTO pharmacydatabase.employee (user_id, departament_id)  ")
                 .append("VALUES( ")
-                .append(departament.getDepartamentId() + ", ")
-                .append(user.getUserId() + " )");
-        getJdbcTemplate().update(sql.toString());
+                .append(" :user_id, ")
+                .append(" :departament_id )");
+        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
 
     }
 
@@ -56,10 +60,10 @@ public class EmployeeDaoImpl extends NamedParameterJdbcDaoSupport implements Emp
     @Transactional(readOnly = true)
     public Employee getEmployeeById(int employeeId) {
         StringBuilder sql = new StringBuilder();
-        MapSqlParameterSource mapSqlParameterSource =new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("employee_id",employeeId);
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("employee_id", employeeId);
         sql.append("SELECT * FROM pharmacydatabase.employee WHERE employee_id = :employee_id ");
-        return getNamedParameterJdbcTemplate().queryForObject(sql.toString(),mapSqlParameterSource, new EmployeeRowMapper());
+        return getNamedParameterJdbcTemplate().queryForObject(sql.toString(), mapSqlParameterSource, new EmployeeRowMapper());
     }
 
     private class EmployeeRowMapper implements RowMapper<Employee> {
@@ -68,9 +72,9 @@ public class EmployeeDaoImpl extends NamedParameterJdbcDaoSupport implements Emp
         public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
             int userId = rs.getInt("user_id");
             int departamentId = rs.getInt("departament_id");
-                Departament  departament = departamentDao.getDepartamentById(departamentId);
-                User user =  userService.getUserById(userId);
-            return new Employee(rs.getInt("employee_id"),user,departament);
+            Departament departament = departamentDao.getDepartamentById(departamentId);
+            User user = userService.getUserById(userId);
+            return new Employee(rs.getInt("employee_id"), user, departament);
 
         }
     }

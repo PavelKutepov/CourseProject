@@ -7,6 +7,7 @@ import java.util.List;
 
 @Service
 public interface EmployeeService {
+
     void addEmployee(User user, Departament departament);
 
     void delEmployee(User user);

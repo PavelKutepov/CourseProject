@@ -22,9 +22,9 @@ import java.util.List;
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements OrderInfoDao {
 
-   private UserService userService;
-   private EmployeeService employeeService;
-   private AddressService addressService;
+    private UserService userService;
+    private EmployeeService employeeService;
+    private AddressService addressService;
 
 
     public void setUserService(UserService userService) {
@@ -58,21 +58,21 @@ public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Or
     @Override
     public OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date) {
         StringBuilder sql = new StringBuilder();
-        KeyHolder keyHolder=new GeneratedKeyHolder();
-        MapSqlParameterSource mapSqlParameterSource= new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("user_info_id",userInfo.getUserInfoId());
-        mapSqlParameterSource.addValue("employee_id",employee.getEmployeeId());
-        mapSqlParameterSource.addValue("address_id",address.getAddressId());
-        mapSqlParameterSource.addValue("date",date);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("user_info_id", userInfo.getUserInfoId());
+        mapSqlParameterSource.addValue("employee_id", employee.getEmployeeId());
+        mapSqlParameterSource.addValue("address_id", address.getAddressId());
+        mapSqlParameterSource.addValue("date", date);
         sql.append("INSERT INTO pharmacydatabase.order_info ( user_info_id, employee_id, address_id, date)")
                 .append("VALUES( ")
                 .append(" :user_info_id, ")
                 .append(" :employee_id, ")
                 .append(" :address_id, ")
                 .append(" :date )");
-        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
-        OrderInfo resultOrder = new OrderInfo(keyHolder.getKey().intValue(),userInfo,employee,address,date);
-        return  resultOrder;
+        getNamedParameterJdbcTemplate().update(sql.toString(), mapSqlParameterSource, keyHolder);
+        OrderInfo resultOrder = new OrderInfo(keyHolder.getKey().intValue(), userInfo, employee, address, date);
+        return resultOrder;
     }
 
     private class OrderInfoRowMapper implements RowMapper<OrderInfo> {

@@ -17,7 +17,7 @@ public class Launcher {
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
         UserService userService = context.getBean(UserService.class);
-       // MedicineService medicineServices = context.getBean(MedicineService.class);
+        // MedicineService medicineServices = context.getBean(MedicineService.class);
 
         int port = 12135;
         try {
