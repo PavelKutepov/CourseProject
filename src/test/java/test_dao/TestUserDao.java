@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pkutepv.dao.user_dao.User;
-import pkutepv.dao.user_dao.UserServices;
+import pkutepv.dao.user_dao.UserInfo;
+import pkutepv.dao.user_dao.UserService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +21,7 @@ import java.util.List;
 @ContextConfiguration("classpath:WEB-INF/applicationContext.xml")
 public class TestUserDao {
     @Autowired
-    private UserServices userServices;
+    private UserService userService;
 
     @Before
     public void setUp() throws Exception {
@@ -32,7 +33,7 @@ public class TestUserDao {
     public void testUserDao() {
         List<User> userstest = new ArrayList<>();
         System.out.println("testUserDao");
-        List<User> users = userServices.getAllUsers();
+        List<User> users = userService.getAllUsers();
         assertNotNull(users);
         for (User us : users) {
             System.out.println(us.getLogin());
@@ -45,8 +46,26 @@ public class TestUserDao {
     public void testGetUserById() {
         System.out.println("testGetUserById");
 
-        User user = userServices.getUserById(1);
+        User user = userService.getUserById(1);
         assertNotNull(user);
+
+
+    }
+    @Test
+    public void testAddUserInfo() {
+        System.out.println("testAddUserInfo");
+        UserInfo userInfo= userService.addUserInfo("Кутепов","Павел","Леонидович","2323223");
+
+        assertNotNull(userInfo);
+        System.out.println("testAddUser");
+         userService.addUser("ppppp","Пsdfsdf",userInfo);
+
+
+
+    }
+    @Test
+    public void testAddUser() {
+
 
 
     }

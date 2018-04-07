@@ -1,13 +1,14 @@
 package pkutepv.dao.user_dao;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public interface UserServices {
+public interface UserService {
 
-    void addUser(String login, String password, String lastname, String firstname, String patronymic, String phoneNumber);
+    User addUser(String login, String password, UserInfo userInfo);
 
     void removeUser(String login, String password);
 
@@ -18,4 +19,6 @@ public interface UserServices {
     List<UserInfo> getAllUsersInfo();
 
     UserInfo getUserInfoById(int userId);
+
+    UserInfo addUserInfo(String lastName, String firstName, String patronymic, String phoneNumber);
 }

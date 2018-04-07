@@ -8,5 +8,5 @@ public interface LocalityDao {
 
     Locality getLocalityById(int localityId);
 
-    void addLocality(Locality locality);
+    Locality addLocality(Locality locality);
 }

@@ -17,18 +17,17 @@ public class MedicineDaoImpl extends NamedParameterJdbcDaoSupport implements Med
 
     @Override
     @Transactional(readOnly = true)
-    public void addMedicine(int medicine_id, String name, String firm, String type, int price, boolean recipe, int availability) {
+    public void addMedicine(String name, String firm, String type, int price, boolean recipe) {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO pharmacydatabase.medicine ")
+        sql.append("INSERT INTO pharmacydatabase.medicine (name,firm,type,recipe,price) ")
                 .append("VALUES( ")
-                .append("\"" +medicine_id + "\",")
                 .append("\"" + name  + "\",")
                 .append("\"" + firm  + "\",")
                 .append("\"" + type  + "\",")
                 .append( recipe + ",")
-                .append( price + ", ")
-                .append(availability  + "\" )");
-        getJdbcTemplate().execute(sql.toString());
+                .append( price + ", )");
+
+        getJdbcTemplate().update(sql.toString());
     }
 
     @Override
@@ -60,7 +59,7 @@ public class MedicineDaoImpl extends NamedParameterJdbcDaoSupport implements Med
 
             return new Medicine(rs.getInt("medicine_id"), rs.getString("name"),
                     rs.getString("firm"), rs.getString("type"),
-                    rs.getInt("price"), rs.getBoolean("recipe"), rs.getInt("availability"));
+                    rs.getInt("price"), rs.getBoolean("recipe"));
 
         }
     }

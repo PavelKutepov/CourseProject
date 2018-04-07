@@ -28,7 +28,7 @@ public class LocalityDaoImpl extends NamedParameterJdbcDaoSupport implements Loc
     }
 
     @Override
-    public void addLocality(Locality locality) {
+    public Locality addLocality(Locality locality) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -43,7 +43,7 @@ public class LocalityDaoImpl extends NamedParameterJdbcDaoSupport implements Loc
                 .append(" :local )");
         getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
         locality.setLocalityId( keyHolder.getKey().intValue());
-
+        return new Locality(keyHolder.getKey().intValue(),locality.getCity(),locality.getDistrict(),locality.getLocal());
     }
 
     @Override

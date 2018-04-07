@@ -8,5 +8,5 @@ public interface OrderDao {
     List<Order> getOrderList();
 
     Order getOrderById(int orderId);
-    void addOrder(int orderId, Medicine medicine, OrderInfo orderInfo, int count);
+    Order addOrder( Medicine medicine, OrderInfo orderInfo, int count);
 }

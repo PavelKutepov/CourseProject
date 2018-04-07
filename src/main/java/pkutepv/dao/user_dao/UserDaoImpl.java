@@ -3,6 +3,8 @@ package pkutepv.dao.user_dao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import pkutepv.dao.role.RoleDao;
@@ -38,24 +40,24 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         return getJdbcTemplate().queryForObject(sql.toString(), new UserRowMapper());
     }
 
-    public void addUser(String login, String password, UserInfo userInfo) {
-      int usInfId=  userInfoDao.addUserInfo(userInfo.getLastName(), userInfo.getFirstName(),
-                userInfo.getPatronymic(), userInfo.getPhoneNumber());
-        userInfo.setUserInfoId(usInfId);
-        User newUser = new User(userInfo.getUserInfoId(),login,password,userInfo);
-        roleDao.addRole(newUser);
+    public User addUser(String login, String password, UserInfo userInfo) {
+
         StringBuilder sql = new StringBuilder();
+
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("user_id",userInfo.getUserInfoId());
-        mapSqlParameterSource.addValue("login",userInfo.getUserInfoId());
-        mapSqlParameterSource.addValue("password",userInfo.getUserInfoId());
+        mapSqlParameterSource.addValue("login", login);
+        mapSqlParameterSource.addValue("password",password);
 
-        sql.append("INSERT INTO pharmacydatabase.user ")
+        sql.append("INSERT INTO pharmacydatabase.user  (user_id,login,password)")
                 .append("VALUES( ")
                 .append(" :user_id , ")
                 .append(" :login, ")
                 .append(" :password )");
         getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
+        User newUser = new User(userInfo.getUserInfoId(),login,password,userInfo);
+        roleDao.addRole(newUser);
+        return newUser;
     }
 
     public void removeUser(String login, String password) {

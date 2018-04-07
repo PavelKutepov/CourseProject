@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +47,7 @@ public class UserInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Use
     }
 
     @Override
-    public int addUserInfo( String lastname, String firstname, String patronymic, String phoneNumber) {
+    public UserInfo addUserInfo( String lastname, String firstname, String patronymic, String phoneNumber) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -53,14 +55,15 @@ public class UserInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Use
         mapSqlParameterSource.addValue("firstname",firstname);
         mapSqlParameterSource.addValue("patronymic",patronymic);
         mapSqlParameterSource.addValue("phoneNumber",phoneNumber);
-        sql.append("INSERT INTO pharmacydatabase.user_info ")
+        sql.append("INSERT INTO pharmacydatabase.user_info ( lastname,firstname,patronymic,phone_number)")
                 .append("VALUES( ")
                 .append(" :lastname, ")
                 .append(" :firstname ,")
                 .append(" :patronymic ,")
                 .append(" :phoneNumber  )");
         getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
-        return keyHolder.getKey().intValue();
+
+        return new UserInfo(keyHolder.getKey().intValue(),lastname,firstname,patronymic,phoneNumber);
     }
 
     private class UserInfoRowMapper implements RowMapper<UserInfo> {

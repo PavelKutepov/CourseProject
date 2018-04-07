@@ -1,22 +1,24 @@
 package pkutepv.dao.user_dao;
 
 
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 
-@Transactional(readOnly = true)
-public class UserServicesImpl implements UserServices {
+
+public class UserServiceImpl implements UserService {
 
 
     private UserDao userDao;
     private UserInfoDao userInfoDao;
 
-
+    @Override
+    public User addUser(String login, String password, UserInfo userInfo) {
+        return userDao.addUser(login,password,userInfo);
+    }
 
     @Override
-    public void addUser(String login, String password, String lastname, String firstname, String patronymic, String phoneNumber) {
+    public UserInfo addUserInfo(String lastName, String firstName, String patronymic, String phoneNumber) {
+        return userInfoDao.addUserInfo(lastName,firstName,patronymic,phoneNumber);
     }
 
     @Override
@@ -50,8 +52,8 @@ public class UserServicesImpl implements UserServices {
         return userInfoDao;
     }
 
-    public void setUserInfoDao(UserInfoDao userInfoServices) {
-        this.userInfoDao = userInfoServices;
+    public void setUserInfoDao(UserInfoDao userInfoDao) {
+        this.userInfoDao = userInfoDao;
     }
 
     @Override

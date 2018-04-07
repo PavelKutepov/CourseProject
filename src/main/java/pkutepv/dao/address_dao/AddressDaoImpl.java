@@ -1,6 +1,7 @@
 package pkutepv.dao.address_dao;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,8 +19,7 @@ import java.util.List;
 public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements AddressDao {
 
     private AddressDao addressDao;
-
-
+    private LocalityDao localityDao;
 
     @Override
     public void addAddress(String street, int house, int apartment, Locality locality) {
@@ -43,8 +43,10 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
     @Override
     public Address getAddressForId(int addressId) {
         StringBuilder sql = new StringBuilder();
-        sql.append("SELECT * FROM pharmacydatabase.address WHERE addres_id = ").append(addressId);
-        return getJdbcTemplate().queryForObject(sql.toString(),new AddressRowMapper());
+        MapSqlParameterSource mapSqlParameterSource =new  MapSqlParameterSource();
+        mapSqlParameterSource.addValue("address_id",addressId);
+        sql.append("SELECT * FROM pharmacydatabase.address WHERE address_id = :address_id");
+        return getNamedParameterJdbcTemplate().queryForObject(sql.toString(),mapSqlParameterSource,new AddressRowMapper());
     }
 
     @Override
@@ -64,12 +66,16 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
         this.addressDao = addressDao;
     }
 
+    public void setLocalityDao(LocalityDao localityDao) {
+        this.localityDao = localityDao;
+    }
+
     public AddressDao getAddressDao() {
         return addressDao;
     }
 
     private class AddressRowMapper implements RowMapper<Address> {
-        private LocalityDao localityDao;
+
 
         @Override
         public Address mapRow(ResultSet rs, int rowNum) throws SQLException {

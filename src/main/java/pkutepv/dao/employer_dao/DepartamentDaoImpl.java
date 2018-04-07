@@ -1,6 +1,6 @@
 package pkutepv.dao.employer_dao;
 
-import com.sun.tools.doclint.Entity;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
@@ -9,14 +9,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class DepartamentDaoImpl extends NamedParameterJdbcDaoSupport implements DepartamentDao {
+
+
     @Override
     @Transactional(readOnly = true)
     public List<Departament> getAllDepartament() {
@@ -35,7 +35,7 @@ public class DepartamentDaoImpl extends NamedParameterJdbcDaoSupport implements 
     }
 
     @Override
-    public void AddDepartament( String name, String position) {
+    public void addDepartament( String name, String position) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource mapSqlParameterSource= new MapSqlParameterSource();

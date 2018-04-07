@@ -7,5 +7,5 @@ public interface DepartamentDao {
 
     Departament getDepartamentById(int departamentId);
 
-    void AddDepartament(String name, String position);
+    void addDepartament(String name, String position);
 }

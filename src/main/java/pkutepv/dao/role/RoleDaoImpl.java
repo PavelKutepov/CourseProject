@@ -1,6 +1,7 @@
 package pkutepv.dao.role;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,9 +32,11 @@ public class RoleDaoImpl extends NamedParameterJdbcDaoSupport implements RoleDao
     @Override
     public void addRole(User user) {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO pharmacydatabase.role VALUES( ")
-                .append(user.getLogin());
-        getJdbcTemplate().execute(sql.toString());
+        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("login",user.getLogin());
+        sql.append("INSERT INTO pharmacydatabase.role (login) VALUES( ")
+                .append(" :login );");
+        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource);
     }
 
 

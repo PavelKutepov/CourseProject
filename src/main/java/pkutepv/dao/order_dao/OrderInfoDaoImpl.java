@@ -1,7 +1,10 @@
 package pkutepv.dao.order_dao;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import pkutepv.dao.address_dao.AddressService;
@@ -9,7 +12,7 @@ import pkutepv.dao.address_dao.Address;
 import pkutepv.dao.employer_dao.Employee;
 import pkutepv.dao.employer_dao.EmployeeService;
 import pkutepv.dao.user_dao.UserInfo;
-import pkutepv.dao.user_dao.UserServices;
+import pkutepv.dao.user_dao.UserService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,13 +22,13 @@ import java.util.List;
 @Transactional(isolation = Isolation.READ_COMMITTED)
 public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements OrderInfoDao {
 
-    UserServices userServices;
-    EmployeeService employeeService;
-    AddressService addressService;
+   private UserService userService;
+   private EmployeeService employeeService;
+   private AddressService addressService;
 
 
-    public void setUserServices(UserServices userServices) {
-        this.userServices = userServices;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public void setEmployeeService(EmployeeService employeeService) {
@@ -53,15 +56,23 @@ public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Or
     }
 
     @Override
-    public void addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date) {
+    public OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date) {
         StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO pharmacydatabase.order_info ")
+        KeyHolder keyHolder=new GeneratedKeyHolder();
+        MapSqlParameterSource mapSqlParameterSource= new MapSqlParameterSource();
+        mapSqlParameterSource.addValue("user_info_id",userInfo.getUserInfoId());
+        mapSqlParameterSource.addValue("employee_id",employee.getEmployeeId());
+        mapSqlParameterSource.addValue("address_id",address.getAddressId());
+        mapSqlParameterSource.addValue("date",date);
+        sql.append("INSERT INTO pharmacydatabase.order_info ( user_info_id, employee_id, address_id, date)")
                 .append("VALUES( ")
-                .append(userInfo.getUserInfoId() + ", ")
-                .append(employee.getEmployeeId() + ", ")
-                .append(address.getAddressId() + ", ")
-                .append(date + " )");
-        getJdbcTemplate().execute(sql.toString());
+                .append(" :user_info_id, ")
+                .append(" :employee_id, ")
+                .append(" :address_id, ")
+                .append(" :date )");
+        getNamedParameterJdbcTemplate().update(sql.toString(),mapSqlParameterSource,keyHolder);
+        OrderInfo resultOrder = new OrderInfo(keyHolder.getKey().intValue(),userInfo,employee,address,date);
+        return  resultOrder;
     }
 
     private class OrderInfoRowMapper implements RowMapper<OrderInfo> {
@@ -72,7 +83,7 @@ public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Or
             int userInfoId = rs.getInt("user_info_id");
             int employeeId = rs.getInt("employee_id");
             int addressId = rs.getInt("address_id");
-            UserInfo userInfo = userServices.getUserInfoById(userInfoId);
+            UserInfo userInfo = userService.getUserInfoById(userInfoId);
             Employee employee = employeeService.getEmployeeById(employeeId);
             Address address = addressService.getAddressForId(addressId);
             return new OrderInfo(rs.getInt("order_info_id"), userInfo, employee, address, rs.getDate("date"));

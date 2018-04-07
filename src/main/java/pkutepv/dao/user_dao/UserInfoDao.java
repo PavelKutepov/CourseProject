@@ -1,13 +1,15 @@
 package pkutepv.dao.user_dao;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+@Component
 public interface UserInfoDao {
     List<UserInfo> getAllUserInfo();
 
     UserInfo getUserInfoById(int userId);
 
-    int addUserInfo(String lastName, String firstName, String patronymic, String phoneNumber);
+    UserInfo addUserInfo(String lastName, String firstName, String patronymic, String phoneNumber);
 
 }
 

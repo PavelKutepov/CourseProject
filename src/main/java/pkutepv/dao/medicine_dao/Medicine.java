@@ -1,35 +1,32 @@
 package pkutepv.dao.medicine_dao;
 
-public class Medicine  {
-    public int medicine_id;
-    public  String name;
+public class Medicine {
 
-    private  String firm;
-
-    private  String type;
-
+    private int medicine_id;
+    private String name;
+    private String firm;
+    private String type;
     private int price;
-
     private boolean recipe;
-    private int availability;
 
-    public Medicine(int medicine_id, String name, String firm, String type, int price, boolean recipe, int availability) {
+
+    public Medicine(int medicine_id, String name, String firm, String type, int price, boolean recipe) {
         this.medicine_id = medicine_id;
         this.name = name;
         this.firm = firm;
         this.type = type;
         this.price = price;
         this.recipe = recipe;
-        this.availability = availability;
+
     }
 
-    public Medicine(String name, String firm, String type, int price, boolean recipe, int availability) {
+    public Medicine(String name, String firm, String type, int price, boolean recipe) {
         this.name = name;
         this.firm = firm;
         this.type = type;
         this.price = price;
         this.recipe = recipe;
-        this.availability = availability;
+
     }
 
     public int getMedicine_id() {
@@ -80,11 +77,4 @@ public class Medicine  {
         this.recipe = recipe;
     }
 
-    public int getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(int availability) {
-        this.availability = availability;
-    }
 }

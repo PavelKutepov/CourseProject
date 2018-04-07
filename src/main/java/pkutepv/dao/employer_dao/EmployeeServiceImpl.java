@@ -10,7 +10,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void addEmployee(User user, Departament departament) {
-
+        employeeDao.addEmployee(user,departament);
     }
 
     @Override

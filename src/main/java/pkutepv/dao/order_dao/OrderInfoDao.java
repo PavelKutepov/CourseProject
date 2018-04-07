@@ -11,5 +11,5 @@ public interface OrderInfoDao {
     List<OrderInfo> getAllOrderInfo();
 
     OrderInfo getOrderInfoById(int orderInfo);
-    void addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date);
+    OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date);
 }
