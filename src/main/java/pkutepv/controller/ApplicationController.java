@@ -1,5 +1,6 @@
 package pkutepv.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import pkutepv.dao.user_dao.UserInfo;
@@ -44,7 +45,7 @@ public class ApplicationController {
         return map;
     }
 
-    public void setUserService(UserService userService) {
+      public void setUserService(UserService userService) {
         this.userService = userService;
     }
 }
