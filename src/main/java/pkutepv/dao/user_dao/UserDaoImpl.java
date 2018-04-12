@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +40,9 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         sql.append("SELECT * FROM pharmacydatabase.user WHERE user_id = ").append(userId);
         return getJdbcTemplate().queryForObject(sql.toString(), new UserRowMapper());
     }
-
+    @Transactional(readOnly = true)
     public User addUser(String login, String password, UserInfo userInfo) {
-
+        userInfo= userInfoDao.addUserInfo(userInfo.getLastName(),userInfo.getFirstName(),userInfo.getPatronymic(),userInfo.getPhoneNumber());
         StringBuilder sql = new StringBuilder();
 
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -59,7 +60,7 @@ public class UserDaoImpl extends NamedParameterJdbcDaoSupport implements UserDao
         roleDao.addRole(newUser);
         return newUser;
     }
-
+    @Transactional(readOnly = true)
     public void removeUser(String login, String password) {
 
     }

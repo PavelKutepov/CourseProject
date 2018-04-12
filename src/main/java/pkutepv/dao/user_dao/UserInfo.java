@@ -24,6 +24,13 @@ public class UserInfo {
         PhoneNumber = phoneNumber;
     }
 
+    public UserInfo(String lastName, String firstName, String patronymic, String phoneNumber) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
+        PhoneNumber = phoneNumber;
+    }
+
     public int getUserInfoId() {
         return userInfoId;
     }

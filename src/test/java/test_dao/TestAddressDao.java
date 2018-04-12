@@ -23,11 +23,11 @@ public class TestAddressDao {
 
     @Test
     public void addAddressTest(){
-        System.out.println("addAddressTest");
-        Locality locality = new Locality("Moсква","Московская Область","Москва");
-        localityDao.addLocality(locality);
+   System.out.println("addAddressTest");
+//        Locality locality = new Locality("Moсква","Московская Область","Москва");
+//        localityDao.addLocality(locality);
 
-    addressService.addAdress("Снежная",24,3,locality);
+//    addressService.addAdress("Снежная",24,3,locality);
     }
     @Test
     public void getddressTest(){

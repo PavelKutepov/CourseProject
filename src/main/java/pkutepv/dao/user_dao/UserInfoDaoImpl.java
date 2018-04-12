@@ -47,6 +47,7 @@ public class UserInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Use
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserInfo addUserInfo(String lastname, String firstname, String patronymic, String phoneNumber) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();

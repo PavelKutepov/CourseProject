@@ -35,10 +35,7 @@ public class TestUserDao {
         System.out.println("testUserDao");
         List<User> users = userService.getAllUsers();
         assertNotNull(users);
-        for (User us : users) {
-            System.out.println(us.getLogin());
-            System.out.println(us.getUserInfo().getFirstName());
-        }
+
 
     }
 
@@ -46,19 +43,19 @@ public class TestUserDao {
     public void testGetUserById() {
         System.out.println("testGetUserById");
 
-        User user = userService.getUserById(1);
+        User user = userService.getUserById(52);
         assertNotNull(user);
 
 
     }
     @Test
     public void testAddUserInfo() {
-        System.out.println("testAddUserInfo");
-        UserInfo userInfo= userService.addUserInfo("Кутепов","Павел","Леонидович","2323223");
-
-        assertNotNull(userInfo);
-        System.out.println("testAddUser");
-         userService.addUser("ppppp","Пsdfsdf",userInfo);
+//        System.out.println("testAddUserInfo");
+//        UserInfo userInfo= new UserInfo("Кутепов","Павел","Леонидович","2323223");
+//
+//        assertNotNull(userInfo);
+//        System.out.println("testAddUser");
+//         userService.addUser("ppppp","Пsdfsdf",userInfo);
 
 
 

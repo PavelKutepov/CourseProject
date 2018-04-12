@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pkutepv.dao.employer_dao.Departament;
 import pkutepv.dao.employer_dao.DepartamentDao;
+import pkutepv.dao.employer_dao.Employee;
 import pkutepv.dao.employer_dao.EmployeeService;
 import pkutepv.dao.user_dao.User;
 import pkutepv.dao.user_dao.UserService;
@@ -31,7 +32,8 @@ public class TestEmployeeDao {
    //  User user= userService.getUserById(1);
    //  Departament departament=   new Departament(1,"dfs","sdfsdf");
        // employeeService.addEmployee(user,departament);
-        employeeService.getEmployeeById(1);
+     Employee  employee= employeeService.getEmployeeById(1);
+        assertNotNull(employee);
     }
     @Test
     public void departamentDaoTest(){

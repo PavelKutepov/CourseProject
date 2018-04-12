@@ -7,6 +7,7 @@ public class MedicineServiceImpl implements MedicineService {
     private MedicineDao medicineDao;
 
     @Override
+
     public void addMedicine(String name, String firm, String type, int price, boolean recipe) {
         medicineDao.addMedicine(name, firm, type, price, recipe);
     }

@@ -18,10 +18,8 @@
 
     <context:component-scan base-package="pkutepv"/>
 
-    <bean id="applicationController" class="pkutepv.controller.ApplicationController" lazy-init="true">
-        <property name="userService" ref="userService"/>
-    </bean>
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <constructor-arg type="javax.sql.DataSource" ref="dataSource"/>
     </bean>
 
@@ -32,10 +30,10 @@
         <property name="roleDao" ref="roleDao"/>
 
     </bean>
-    <bean id="roleDao" class="pkutepv.dao.role.RoleDaoImpl">
+    <bean id="roleDao" class="pkutepv.dao.role.RoleDaoImpl" >
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
-    <bean id="userService" class="pkutepv.dao.user_dao.UserServiceImpl">
+    <bean id="userService" class="pkutepv.dao.user_dao.UserServiceImpl" >
         <property name="userDao" ref="userDao"/>
         <property name="userInfoDao" ref="userInfoDao"/>
     </bean>

@@ -16,6 +16,7 @@ import java.util.List;
 public class RoleDaoImpl extends NamedParameterJdbcDaoSupport implements RoleDao {
 
     @Override
+    @Transactional(readOnly = true)
     public List<Role> getAllRoles() {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.role ");
@@ -23,6 +24,7 @@ public class RoleDaoImpl extends NamedParameterJdbcDaoSupport implements RoleDao
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Role getRoleByLogin(String roleLogin) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.role WHERE login = ").append(roleLogin);
@@ -30,6 +32,7 @@ public class RoleDaoImpl extends NamedParameterJdbcDaoSupport implements RoleDao
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void addRole(User user) {
         StringBuilder sql = new StringBuilder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();

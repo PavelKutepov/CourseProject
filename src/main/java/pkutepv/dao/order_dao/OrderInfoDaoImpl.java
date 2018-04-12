@@ -56,6 +56,7 @@ public class OrderInfoDaoImpl extends NamedParameterJdbcDaoSupport implements Or
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderInfo addOrderInfo(UserInfo userInfo, Employee employee, Address address, Date date) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();

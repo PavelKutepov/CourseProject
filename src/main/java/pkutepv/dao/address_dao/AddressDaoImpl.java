@@ -22,6 +22,7 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
     private LocalityDao localityDao;
 
     @Override
+    @Transactional(readOnly = true)
     public void addAddress(String street, int house, int apartment, Locality locality) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("street", street);
@@ -41,6 +42,7 @@ public class AddressDaoImpl extends NamedParameterJdbcDaoSupport implements Addr
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Address getAddressForId(int addressId) {
         StringBuilder sql = new StringBuilder();
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();

@@ -27,6 +27,7 @@ public class LocalityDaoImpl extends NamedParameterJdbcDaoSupport implements Loc
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Locality addLocality(Locality locality) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();

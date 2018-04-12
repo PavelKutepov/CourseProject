@@ -35,6 +35,7 @@ public class DepartamentDaoImpl extends NamedParameterJdbcDaoSupport implements 
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void addDepartament(String name, String position) {
         StringBuilder sql = new StringBuilder();
         KeyHolder keyHolder = new GeneratedKeyHolder();

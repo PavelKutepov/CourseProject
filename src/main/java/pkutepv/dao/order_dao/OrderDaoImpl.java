@@ -38,6 +38,7 @@ public class OrderDaoImpl extends NamedParameterJdbcDaoSupport implements OrderD
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Order addOrder(Medicine medicine, OrderInfo orderInfo, int count) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("medicine_id", medicine.getMedicine_id());
@@ -54,7 +55,7 @@ public class OrderDaoImpl extends NamedParameterJdbcDaoSupport implements OrderD
         Order order = new Order(keyHolder.getKey().intValue(), medicine, orderInfo, count);
         return order;
     }
-
+    @Transactional(readOnly = true)
     public List<Order> getOrderListByOrderInfoId(int orderInfoId) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM pharmacydatabase.order WHERE order_info_id = ").append(orderInfoId);

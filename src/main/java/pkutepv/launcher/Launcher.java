@@ -2,8 +2,11 @@ package pkutepv.launcher;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pkutepv.dao.user_dao.UserService;
+import pkutepv.dao.user_dao.UserServiceImpl;
 
 import java.net.URL;
 import java.security.ProtectionDomain;
@@ -11,13 +14,16 @@ import java.security.ProtectionDomain;
 /**
  * Starts jetty-server on the specified port
  */
+@Configuration
+
+@ComponentScan
 public class Launcher {
 
     public static void main(String[] args) throws Exception {
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("WEB-INF/applicationContext.xml");
-        UserService userService = context.getBean(UserService.class);
-        // MedicineService medicineServices = context.getBean(MedicineService.class);
+        UserService userService = context.getBean("userService",UserService.class);
+//         MedicineService medicineServices = context.getBean(MedicineService.class);
 
         int port = 12135;
         try {
